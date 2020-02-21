@@ -1,3 +1,5 @@
+Simple Linear Regression
+
 #load data
 NewspaperData <- read.csv("C:/Users/Rashmi/Desktop/ExcelR/R/NewspaperData.csv")
 
