@@ -1,0 +1,21 @@
+#load data
+NewspaperData <- read.csv("C:/Users/Rashmi/Desktop/ExcelR/R/NewspaperData.csv")
+
+#visualization
+library("lattice")
+dotplot(NewspaperData$sunday,main="Dot Plotof Sunday Circulations", col="Black")
+dotplot(NewspaperData$sunday,main="Dot Plotof Daily Circulations", col="Blue")
+boxplot(NewspaperData$sunday,col="Pink")
+boxplot(NewspaperData$daily,col="Red")
+
+
+#Regression Equation
+#Syntax model<-lm(y~x,data=data set name)
+model<-lm(sunday~daily,data=NewspaperData)
+summary(model)
+new<-data.frame(daily=c(200,250,300))
+pred<-predict(model,newdata = new)
+
+pred<-predict(model)
+finaldata<-data.frame(NewspaperData,pred,"Error"=NewspaperData$sunday-pred)
+finaldata
