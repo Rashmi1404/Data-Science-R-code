@@ -1,3 +1,5 @@
+Simple Linear Regression
+
 #Load Data
 WC_AT <- read.csv("C:/Users/Rashmi/Desktop/ExcelR/R/WC_AT.csv")
 View(WC_AT)
