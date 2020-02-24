@@ -1,0 +1,52 @@
+model.car<-lm(MPG~.,data = Cars)
+summary(model.car)
+
+
+insatll.package("car")
+library(car)
+car::vif(model.car)
+
+
+plot(model.car)
+
+residualPlots(model.car)
+
+
+qqPlot(model.car)
+
+
+influenceIndexPlot(model.car)
+
+
+Cars1<-Cars[-77,]
+model1<-lm(Cars1$MPG~.,data = Cars1)
+car::vif(model1)
+plot(model1)
+residualPlots(model1)
+qqPlot(model1)
+influenceIndexPlot(model1)
+
+
+Cars2<-Cars[-c(77,79),]
+model1<-lm(Cars2$MPG~.,data = Cars2)
+car::vif(model1)
+plot(model1)
+residualPlots(model1)
+qqPlot(model1)
+influenceIndexPlot(model1)
+
+Cars3<-Cars[-c(77,79,80),]
+model1<-lm(Cars3$MPG~.,data = Cars3)
+car::vif(model1)
+plot(model1)
+residualPlots(model1)
+qqPlot(model1)
+influenceIndexPlot(model1)
+
+Cars4<-Cars[-c(1,66,77,79,80),]
+model1<-lm(Cars4$MPG~.,data = Cars4)
+car::vif(model1)
+plot(model1)
+residualPlots(model1)
+qqPlot(model1)
+influenceIndexPlot(model1)
