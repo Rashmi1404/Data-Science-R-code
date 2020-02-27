@@ -1,0 +1,24 @@
+install.packages("plyr")
+library(plyr)
+
+x <- runif(50) #generating 50 random numbers from uniform distribution (0 to 1)
+y <- runif(50) #
+data <- cbind(x,y)
+plot(data)
+
+
+
+wss<-c()
+for (i in 2:15) wss[i] <- sum(kmeans(data,centers = i)$withinss)
+plot(1:15,wss,type = "b",xlab = "no of clusters",ylab = "avg distance")
+
+#cluster algorithm building
+km <- kmeans(data,8)
+km$centers
+km$cluster
+##
+install.packages("animation")
+library(animation)
+windows()
+km <- kmeans.ani(data,7)
+#####
