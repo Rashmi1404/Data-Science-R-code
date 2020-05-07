@@ -27,14 +27,14 @@ rules_lift <- sort (rules1, by="lift", decreasing=TRUE) # 'high-lift' rules.
 inspect(head(rules_lift)) # show the support, lift and confidence for all rules
 #A rule with a lift of 182 imply that, the items in LHS and RHS are 182 times more likely to be purchased together compared to the purchases when they are assumed to be unrelated.
 
-#To get 'strong' rules,we increase the value of 'conf' parameter.
-#To get 'longer' rules, increase 'maxlen'.
+#To get ‘strong‘ rules,we increase the value of ‘conf’ parameter.
+#To get ‘longer‘ rules, increase ‘maxlen’.
 
 ###RULE2
 rules <- apriori (data=groceries, parameter=list (supp=0.001,conf = 0.08), appearance = list (default="lhs",rhs="bags"), control = list (verbose=F)) # get rules that lead to buying 'whole milk'
 rules_conf <- sort (rules, by="confidence", decreasing=TRUE) # 'high-confidence' rules.
 inspect(head(rules_conf))
-#we found out what customers had purchased before buying 'bags'. This will help us understand the patterns that led to the purchase of 'bags'
+#we found out what customers had purchased before buying ‘bags’. This will help us understand the patterns that led to the purchase of ‘bags’
 
 ###RULE3
 rules <- apriori (data=groceries, parameter=list (supp=0.001,conf = 0.15,minlen=2), appearance = list(default="rhs",lhs="vegetables"), control = list (verbose=F)) # those who bought 'vegetables' also bought..
@@ -46,6 +46,7 @@ rules <- apriori (data=groceries, parameter=list (supp=0.001,conf = 0.15,minlen=
 rules_conf <- sort (rules, by="confidence", decreasing=TRUE) # 'high-confidence' rules.
 inspect(head(rules_conf))
 
+##Visualization
 
 library(arulesViz)
 plot(rules,method = "scatterplot", jitter=0 )
@@ -55,23 +56,4 @@ plot(rules,method = "mosaic")  #this plot dont work fora ll rules together it ca
 plot(rules,method="two-key plot", jitter=0)
 top4rules <- head(rules, n = 10, by = "confidence")
 plot(top4rules, method = "graph",  engine = "htmlwidget") #an interactive plot
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
