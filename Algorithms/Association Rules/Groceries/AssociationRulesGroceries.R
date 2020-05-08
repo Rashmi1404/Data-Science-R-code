@@ -11,8 +11,8 @@ LIST(head(groceries, 3)) # convert 'transactions' to a list, note the LIST in CA
 options(max.print=999999) #without this function i got a warning as  [ reached getOption("max.print") -- omitted 29 rows ] where only 21 rows output was shown and my data set had more rows than it
 
 
-frequentItems <- eclat (groceries, parameter = list(supp = 0.002, maxlen = 15)) # calculates support for frequent items
-inspect(frequentItems) 
+frequentItems <- eclat (groceries, parameter = list(supp = 0.002, maxlen = 5)) # calculates support for frequent items
+inspect(frequentItems)
 #eclat() takes in a transactions object and gives the most frequent items in the data 
 #maxlen defines the maximum number of items in each itemset of frequent items
 
@@ -40,12 +40,10 @@ rules <- rules[-subsetRules] # remove subset rules.
 
 ###RULE2
 
-rules <- apriori (data=groceries, parameter=list (supp=0.001,conf = 0.08), appearance = list (default="lhs",rhs="bags"), control = list (verbose=F)) # get rules that lead to buying 'whole milk'
+rules <- apriori (data=groceries, parameter=list (supp=0.001,conf = 0.08), appearance = list (default="lhs",rhs="bags"), control = list (verbose=F)) # get rules that lead to buying 'bags'
 rules_conf <- sort (rules, by="confidence", decreasing=TRUE) # 'high-confidence' rules.
 inspect(head(rules_conf))
 #we found out what customers had purchased before buying ‘bags’. This will help us understand the patterns that led to the purchase of ‘bags’
-
-
 
 ###RULE3
 
@@ -53,14 +51,11 @@ rules <- apriori (data=groceries, parameter=list (supp=0.001,conf = 0.08), appea
 rules_conf <- sort (rules, by="confidence", decreasing=TRUE) # 'high-confidence' rules.
 inspect(head(rules_conf))
 
-
 #we will check for beer 
 
-rules <- apriori (data=groceries, parameter=list (supp=0.001,conf = 0.08), appearance = list(default="rhs",lhs="beer"), control = list (verbose=F)) # those who bought 'vegetables' also bought..
+rules <- apriori (data=groceries, parameter=list (supp=0.001,conf = 0.08), appearance = list(default="rhs",lhs="beer"), control = list (verbose=F)) # those who bought 'beer' also bought..
 rules_conf <- sort (rules, by="confidence", decreasing=TRUE) # 'high-confidence' rules.
 inspect(head(rules_conf))
-
-
 
 ######Visualization######
 
@@ -73,8 +68,6 @@ plot(rules,method = "graph")
 plot(rules,method="two-key plot", jitter=0)
 top4rules <- head(rules, n = 10, by = "confidence")
 plot(top4rules, method = "graph",  engine = "htmlwidget") #an interactive plot
-
-
 
 
 ###Trying different values of support and confidence 
