@@ -30,7 +30,7 @@ library(scales)
 #######Data Understanding####
 
 ##Loading the dataset
-BlackFriday <-read.csv("C:/Users/Admin/Desktop/Black Friday Project/BlackFridayDataset.csv")
+BlackFriday <-read.csv("C:/Users/Rashmi/Desktop/Black Friday/BlackFridayDataset.csv")
 attach(BlackFriday)
 summary(BlackFriday)
 str(BlackFriday)
@@ -60,7 +60,7 @@ table(Marital_Status)
 #People have their marriage status marked as either 0 or 1
 
 
-                          ###########FOR GENDER#########
+###########FOR GENDER#########
 
 dataset_gender = BlackFriday %>% select(User_ID, Gender) %>% group_by(User_ID) %>% distinct()  
 head(dataset_gender)
@@ -96,7 +96,7 @@ genderAverage  = ggplot(data = average_spending_gender) +
 print(genderAverage)
 
 
-                             #######Our top selling products#########
+#######Our top selling products#########
 
 
 top_sellers = BlackFriday %>% count(Product_ID, sort = TRUE)
@@ -137,7 +137,7 @@ grid.arrange(genderDist_prop, genderDist_bs_prop, ncol=2)
 #that our best seller does not serve to a specific gender.
 
 
-                               ##########For AGE#############
+##########For AGE#############
 
 customers_age = BlackFriday %>% select(User_ID, Age) %>% distinct() %>% count(Age)
 customers_age
@@ -175,7 +175,7 @@ grid.arrange(customers_age_vis, ageDist_bs, ncol=2)
 #here we are see a slight difference only, we can conclude the the old age > 45 people are buying less of our best selled product
 
 
-                                 #######For City Category######
+#######For City Category######
 
 
 customers_location = BlackFriday %>% select(User_ID, City_Category) %>% distinct()
@@ -245,7 +245,7 @@ grid.arrange(purchaseCity_vis, city_count_purchases_vis, ncol = 2)
 #If it were the other case, then customers from City B would most likely have a 
 #lower count of total purchases corresponding to a higher total purchase amount.
 
-                             #####Best Selled Product by city####
+#####Best Selled Product by city####
 
 head(best_seller)
 
@@ -265,7 +265,7 @@ grid.arrange(city_count_purchases_vis,best_seller_city_vis, ncol = 2)
 #residents of City C fall behind City B in overall number of purchases.
 
 
-               #######For Stay_In_Current_city_Year#########
+#######For Stay_In_Current_city_Year#########
 
 customers_stay = BlackFriday %>% select(User_ID, City_Category, Stay_In_Current_City_Years) %>% group_by(User_ID) %>% distinct()
 head(customers_stay)
@@ -304,7 +304,7 @@ ggplot(by_stay, aes(Stay_In_Current_City_Years, Purchase)) + geom_bar(stat = 'id
 
 
 
-                             ###########For Purchase###########
+###########For Purchase###########
 
 # purchase range
 range.purchase = range(Purchase)
@@ -352,8 +352,8 @@ summary(customers_total_purchase_amount)
 
 
 
-                                ######### FOR Marital status.#########
- 
+######### FOR Marital status.#########
+
 
 table(BlackFriday$Marital_Status)#there are 32126 more single customers than couples.
 
@@ -431,8 +431,8 @@ ggplot(by_mar, aes(Marital_Status, Purchase)) + geom_bar(stat = 'identity', fill
 #Altough we had more single customers, couples spend as much as single customers on average.
 
 
-                        
-                          ############Top Shoppers###############
+
+############Top Shoppers###############
 
 
 top_shoppers = BlackFriday %>% count(User_ID, sort = TRUE)
@@ -465,7 +465,7 @@ head(top_shoppers_averagePurchase)
 
 
 
-                           ######### FOR occupation#########
+######### FOR occupation#########
 
 ggplot(BlackFriday, aes(Occupation)) + geom_bar(fill= 'pink3') + theme_classic()  #Occupation 0,4,7 are most noticeable among customers.
 
@@ -497,7 +497,7 @@ print(occupation)
 
 
 
-                               #######Data Preprocessing######
+#######Data Preprocessing######
 
 #Spliting data into train(70%) and test(30%)
 
@@ -550,11 +550,11 @@ custom <- trainControl(method = "repeatedcv",
 #and then the model are made of 9 parts and 1 part is used for error estimation and this is repeated 10 times
 #with a different part used for error estimation)
 
-                            #######Linear Regression Model######
+#######Linear Regression Model######
 
 set.seed(1234)
 lm <- train(Purchase ~ Gender+Age+Occupation+City_Category+Stay_In_Current_City_Years+
-                 Marital_Status+Product_Category_1,train, method = 'lm' , trControl = custom)
+              Marital_Status+Product_Category_1,train, method = 'lm' , trControl = custom)
 summary(lm)
 lm$results
 plot(lm$finalModel , col = 'purple')
@@ -573,8 +573,8 @@ test_sub_lm<- data.frame(test$User_ID,test$Product_ID,pred_test_lm,test$Purchase
 head(test_sub_lm)
 
 sqrt(mean((test$Purchase-pred_test_lm)^2)) #3672.087
- 
-                           ###########RIDGE REGRESSION############
+
+###########RIDGE REGRESSION############
 
 set.seed(1234)
 ridge <- train(Purchase ~ Gender+Age+Occupation+City_Category+Stay_In_Current_City_Years+
@@ -610,7 +610,7 @@ head(test_sub_rid)
 
 sqrt(mean((test$Purchase-pred_test_rid)^2)) #3674.9
 
-                            #########Lasso Regresssion########
+#########Lasso Regresssion########
 
 set.seed(1234)
 lasso <- train(Purchase ~ Gender+Age+Occupation+City_Category+Stay_In_Current_City_Years+
@@ -642,7 +642,7 @@ head(test_sub_lasso)
 
 sqrt(mean((test$Purchase-pred_test_lasso)^2)) #3671.87
 
-                                #######Elastic Net Regression######
+#######Elastic Net Regression######
 
 set.seed(1234)
 elastic <- train(Purchase ~ Gender+Age+Occupation+City_Category+Stay_In_Current_City_Years+
@@ -674,9 +674,9 @@ head(test_sub_elastic)
 
 sqrt(mean((test$Purchase-pred_test_elastic)^2)) #3671.84
 
-                            ###########Decision Tree#########
+###########Decision Tree#########
 
-model_dt <- rpart(Purchase~Gender+Marital_Status+Product_Category_1+Age+Occupation+Stay_In_Current_City_Years+City_Category, data = train)
+model_dt <- rpart(Purchase~Gender+Marital_Status+Product_Category_1+Product_Category_2+Product_Category_3+Age+Occupation+Stay_In_Current_City_Years+City_Category, data = train)
 
 model_dt
 summary(model_dt)
@@ -684,14 +684,10 @@ printcp(model_dt)
 plotcp(model_dt)
 
 #plotting the tree
-rpart.plot(model_dt,extra = 3)
-
-#pruning the tree
-model_dt_prune <- prune(model_dt, cp=0.01)
-rpart.plot(model_dt_prune)
+rpart.plot(model_dt,extra = 1)
 
 #predicting on the test dataset 
-pred_test_dt <- predict(model_dt_prune, test)
+pred_test_dt <- predict(model_dt, test)
 test_sub_dt <- data.frame(test$User_ID,test$Product_ID,pred_test_dt,test$Purchase)
 head(test_sub_dt)
 test_sub_dt
@@ -700,11 +696,11 @@ sqrt(mean((test$Purchase-pred_test_dt)^2)) ##3728.4
 
 
 
-                            ########Random forest#############
+########Random forest#############
 
 set.seed(123)
 model_rf <- randomForest(Purchase ~ Gender+Age+Occupation+City_Category+Stay_In_Current_City_Years+
-                           Marital_Status+Product_Category_1, data = train, ntree = 40)
+                           Marital_Status+Product_Category_1, data = train, ntree = 17)
 
 model_rf$ntree
 model_rf$importance
