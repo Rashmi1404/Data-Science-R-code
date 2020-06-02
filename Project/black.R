@@ -30,7 +30,7 @@ library(scales)
 #######Data Understanding####
 
 ##Loading the dataset
-BlackFriday <-read.csv("C:/Users/Admin/Desktop/Black Friday Project/BlackFridayDataset.csv")
+BlackFriday <-read.csv(file())
 attach(BlackFriday)
 summary(BlackFriday)
 str(BlackFriday)
