@@ -1,0 +1,12 @@
+%% Data on the titanic victims
+Anthony,1870,1912
+Ernest,1892,NA
+Eugene,1871,1912
+Rossmore,1856,1912
+Samuel,1902,NA
+William,1876,1912
+John,1904,1912
+Robert,1863,1912
+Percy,1910,1912
+% Names, birth and death dates
+
